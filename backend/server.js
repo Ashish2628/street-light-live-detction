@@ -11,6 +11,10 @@ app.use(cors({
   credentials: true
 }));
 
+app.use(cors({
+  origin: 'https://street-light-frontend.onrender.com',
+}));
+
 // Connect to Database
 connectDB();
 
