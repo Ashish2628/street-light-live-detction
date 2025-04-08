@@ -44,7 +44,7 @@ export default function Report() {
 
       const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-      const response = await fetch(`${API_BASE}//api/sensors/${sensorId}/values?period=${period}`);
+      const response = await fetch(`${API_BASE}/api/sensors/${sensorId}/values?period=${period}`);
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
