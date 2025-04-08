@@ -258,9 +258,7 @@ export default function AddSensor() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [showMap, setShowMap] = useState(false);
 
-  const API_BASE = process.env.NODE_ENV === 'development' 
-    ? 'http://localhost:5000' 
-    : '';
+  const API_BASE = process.env.API_URL|| 'http://localhost:5000';
 
   const handleChange = (e) => {
     const { name, value } = e.target;

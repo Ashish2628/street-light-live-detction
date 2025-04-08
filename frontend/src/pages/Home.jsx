@@ -38,9 +38,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const API_BASE = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:5000' 
-  : '';
+  const API_BASE = process.env.API_URL|| 'http://localhost:5000';
 
   useEffect(() => {
     setMapLoaded(true);
