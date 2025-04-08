@@ -331,13 +331,10 @@ export default function Report() {
               <Typography variant="h6" gutterBottom>
                 {`Light Intensity - ${
                   period === 'hourly' ? 'Today (24 Hours)' : 
-                  period === 'daily' ? `Current Month (${new Date().toLocaleString('default', { month: 'long' })}) Days` :
-                  period === 'monthly' ? 'Current Year (Months)' :
-                  'All Years'
+                  period === 'daily' ? `Current Month (${new Date().toLocaleString('default', { month: 'long' })})` : 
+                  period === 'monthly' ? `Current Year (${new Date().getFullYear()})` : 
+                  'All Available Years'
                 }`}
-                <Typography component="span" variant="body2" sx={{ ml: 2 }}>
-                  (Showing {chartData.filter(d => d.hasData).length} data points)
-                </Typography>
               </Typography>
               
               <Box sx={{ 
@@ -348,66 +345,27 @@ export default function Report() {
                 p: 2,
                 backgroundColor: '#fff'
               }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  {selectedChart === 'line' ? (
-                    <LineChart data={chartData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f5" />
-                      <XAxis 
-                        dataKey="name" 
-                        tick={<CustomizedAxisTick />}
-                        interval={0}
-                        height={60}
-                      />
-                      <YAxis 
-                        label={{ 
-                          value: 'Intensity (lux)', 
-                          angle: -90, 
-                          position: 'insideLeft',
-                          style: { fill: '#666' }
-                        }} 
-                        domain={[0, 'dataMax + 10']}
-                      />
-                      <Tooltip content={<CustomTooltip />} />
-                      <Legend />
-                      <Line 
-                        type="monotone" 
-                        dataKey="value" 
-                        stroke="#8884d8" 
-                        strokeWidth={2}
-                        dot={{ r: 4 }}
-                        activeDot={{ r: 6, stroke: '#8884d8', strokeWidth: 2 }} 
-                        name="Light Intensity"
-                        connectNulls={true}
-                      />
-                    </LineChart>
-                  ) : (
-                    <BarChart data={chartData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f5" />
-                      <XAxis 
-                        dataKey="name" 
-                        tick={<CustomizedAxisTick />}
-                        interval={0}
-                        height={60}
-                      />
-                      <YAxis 
-                        label={{ 
-                          value: 'Intensity (lux)', 
-                          angle: -90, 
-                          position: 'insideLeft',
-                          style: { fill: '#666' }
-                        }} 
-                        domain={[0, 'dataMax + 10']}
-                      />
-                      <Tooltip content={<CustomTooltip />} />
-                      <Legend />
-                      <Bar 
-                        dataKey="value" 
-                        fill="#8884d8" 
-                        name="Light Intensity"
-                      />
-                    </BarChart>
-                  )}
-                </ResponsiveContainer>
+                <ResponsiveContainer width="100%" height={400}>
+                {selectedChart === 'line' ? (
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" height={60} tick={<CustomizedAxisTick />} />
+                    <YAxis />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+                  </LineChart>
+                ) : (
+                  <BarChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" height={60} tick={<CustomizedAxisTick />} />
+                    <YAxis />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Bar dataKey="value" fill="#8884d8" />
+                  </BarChart>
+                )}
+              </ResponsiveContainer>
               </Box>
 
               {chartData.filter(d => d.hasData).length > 0 && (
