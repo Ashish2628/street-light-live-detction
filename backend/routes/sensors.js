@@ -310,15 +310,20 @@ router.get('/:sensorId/values', async (req, res) => {
 // Update sensor address
 router.patch('/:id', async (req, res) => {
   try {
-    const { address } = req.body;
-    
-    if (!address) {
-      return res.status(400).json({ message: 'Address data is required' });
+    const { address, latitude, longitude } = req.body;
+
+    if (!address && latitude === undefined && longitude === undefined) {
+      return res.status(400).json({ message: 'At least one field is required to update' });
     }
+
+    const updateFields = {};
+    if (address) updateFields.address = address;
+    if (latitude !== undefined) updateFields.latitude = latitude;
+    if (longitude !== undefined) updateFields.longitude = longitude;
 
     const updatedSensor = await Sensor.findByIdAndUpdate(
       req.params.id,
-      { $set: { address } },
+      { $set: updateFields },
       { new: true, runValidators: true }
     );
 
