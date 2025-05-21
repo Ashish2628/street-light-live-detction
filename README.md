@@ -7,7 +7,7 @@
 
 ### 2. Clone & Setup
 
-git clone https://github.com/yourusername/street-light-live-detction-main.git
+git clone https://github.com/Ashish2628/street-light-live-detction.git
 cd street-light-live-detction-main/backend
 npm install
 
